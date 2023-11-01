@@ -1,0 +1,25 @@
+{
+    "name": "Agent name",
+    "description": "Agent Description",
+    "icon": "https://google-news-initiative.s3.eu-central-1.amazonaws.com/Apostrophe.png",
+    "color": "",
+    "url": "",
+    "capabilities": "Describe agent capabilities",
+    "inputs": [
+        {
+            "name": "query",
+            "type": "shortText",
+            "label": "Query",
+            "validation": {
+                "required": true,
+                "error": "Query is required"
+            }
+        }
+    ],
+    "outputs": [
+        {
+            "label": "summary",
+            "type": "shortText"
+        }
+    ]
+}
