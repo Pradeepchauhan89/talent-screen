@@ -14,6 +14,7 @@ from urllib.parse import urlparse
 # import your agent here
 from src.agents.get_files import file_list
 from src.agents.get_file_contents import file_content
+from src.agents.screen import screen_resume
 
 from src.utils.temp_db import temp_data
 from src.core.logger import Logger
@@ -60,13 +61,9 @@ class ExecuteController:
             "info": "Agent is fetching file from drive.",
           }
         })
-        file_content(file)
-        # Get the file content as a media object.
-        
-        
-      # resp =  callYourAgent()
-      #add_output_here
-      # Call spritz API
+        file_text = file_content(file)
+        screen_resume(file_text)
+
       call_webhook_with_success({
         "status": "completed",
         "data": {

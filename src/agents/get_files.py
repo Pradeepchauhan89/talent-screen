@@ -17,7 +17,7 @@ def file_list(folder_id):
 
     # List files in the folder.
     results = drive_service.files().list(q=f"'{folder_id}' in parents",
-                                         pageSize=10,
+                                         pageSize=100,
                                          fields="files(id, name)").execute()
   except Exception as e:
     print(f"\n\n\ file_list: error {str(e)} \n\n")

@@ -36,7 +36,7 @@ def file_content(file):
 def get_file_content(service, file_id):
   try:
     file_content = ""
-    if file_content != "":
+    if file_id != "":
       request = service.files().get_media(fileId=file_id)
       file_content = BytesIO(request.execute())
   except Exception as e:
@@ -63,7 +63,8 @@ def read_pdf_content(file_content):
         text_content = ""
         for page_number in range(pdf_document.page_count):
             page = pdf_document[page_number]
-            text_content += page.get_text()
+            text_content += page.get_text("text")
+      text_content = remove_special_character(text_content)
     except Exception as e:
       print(f"\n\n\ read_pdf_content: get pdf content for file {str(e)} \n\n")
 
