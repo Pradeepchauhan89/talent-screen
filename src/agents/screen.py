@@ -1,7 +1,7 @@
 import os
 import openai
 
-openai.api_key = "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"
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 def screen_resume(text_content):
   try:
