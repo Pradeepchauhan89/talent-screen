@@ -1,1 +1,25 @@
-{"name":null,"description":null,"icon":null,"color":null,"url":null,"capabilities":null,"inputs":[{"name":"query","type":"shortText","label":"Query","validation":{"required":true,"error":"Query is required"}}],"outputs":[{"label":"summary","type":"shortText"}]}
+{
+    "name": "talent screen",
+    "description": "It summarizes Italian parliamentary debates for efficient access to legislative insights in Italy.",
+    "icon": "https://google-news-initiative.s3.eu-central-1.amazonaws.com/Apostrophe.png",
+    "color": "#d3eeb6",
+    "url": "https://talent-screen.Pradeepchauhan89.repl.co",
+    "capabilities": "Agent will read resume and match it against provided job description.",
+    "inputs": [
+  {
+    "name": "url",
+    "type": "url",
+    "label": "Url",
+    "validation": {
+      "required": true,
+      "error": "Url is required"
+    }
+  }
+],
+    "outputs": [
+  {
+    "label": "Doc Url",
+    "type": "url"
+  }
+]
+  }

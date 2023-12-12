@@ -1,4 +1,4 @@
-# parliament-agent
+# talent screen
   It summarizes Italian parliamentary debates for efficient access to legislative insights in Italy.
   ## Installation
   To install all dependencies run :
@@ -12,5 +12,5 @@
   ```bash
     uvicorn main:app --reload
   ```
-  Access it at `http://localhost:7000` (HOST=localhost and PORT=7000 as defined in .env file)
+  Access it at `http://localhost:8000` (HOST=localhost and PORT=8000 as defined in .env file)
   
