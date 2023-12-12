@@ -17,7 +17,7 @@ def call_webhook_with_success(response):
       "data": response.get("data")
   })
   webhookUrl = os.environ.get('WEB_HOOK_URL')
-  resp = requests.post(webhookUrl, data=payload)
+  resp = '' # requests.post(webhookUrl, data=payload)
   return resp
 
 

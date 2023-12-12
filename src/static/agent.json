@@ -2,7 +2,7 @@
     "name": "talent screen",
     "description": "It summarizes Italian parliamentary debates for efficient access to legislative insights in Italy.",
     "icon": "https://google-news-initiative.s3.eu-central-1.amazonaws.com/Apostrophe.png",
-    "color": "#d3eeb6",
+    "color": "#01f91d",
     "url": "https://talent-screen.Pradeepchauhan89.repl.co",
     "capabilities": "Agent will read resume and match it against provided job description.",
     "inputs": [

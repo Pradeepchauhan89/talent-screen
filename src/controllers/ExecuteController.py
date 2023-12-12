@@ -1,9 +1,19 @@
 import os
 import json
+
+import io
+import chardet
+from docx import Document
+from PyPDF2 import PdfReader
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+
 from src.schemas.agent import AgentSchema
 from src.utils.webhook import call_webhook_with_success, call_webhook_with_error
+from urllib.parse import urlparse
 # import your agent here
-# from src.agents.filename import function_name
+from src.agents.get_files import file_list
+from src.agents.get_file_contents import file_content
 
 from src.utils.temp_db import temp_data
 from src.core.logger import Logger
@@ -19,6 +29,7 @@ class ExecuteController:
     try:
 
       resp={}
+      files = []
       payload = payload.dict()
       for param in payload["inputs"]:
   
@@ -26,7 +37,20 @@ class ExecuteController:
         if param['name'] == "url":
           url = param['data']
         
+        folder_id = extract_folder_id_from_url(url)
+        files = file_list(folder_id)
 
+        files = files.get('files', [])
+        print(files)
+      
+      for file in files:
+        print(file)
+        print(f"\n\n\n\n\n{file['name']} ({file['id']})")
+        file_id = file['id']
+        file_content(file)
+        # Get the file content as a media object.
+        
+        
       # resp =  callYourAgent()
       #add_output_here
       # Call spritz API
@@ -34,7 +58,7 @@ class ExecuteController:
         "status": "completed",
         "data": {
           "title": "Agent executed successfully.",
-          "info": "It is the default title, change it.",
+          "info": "All resume has been reviewed. Please visit Doc url.",
           "output": {
             "name": "Doc Url",
             "type": "url",
@@ -46,5 +70,19 @@ class ExecuteController:
       logger.info('Function execute: Execution complete', resp)
       return { "summary": "Agent execution has been completed.", "detail": resp }
     except Exception as e:
-      logger.error('Function execute: error', e)
+      # logger.error('Function execute: error', e)
+      print('error====')
+      print(e)
       raise call_webhook_with_error(str(e), 500)
+
+
+def extract_folder_id_from_url(url):
+    parsed_url = urlparse(url)
+    path_parts = parsed_url.path.split('/')
+    if 'folders' in path_parts:
+        folder_index = path_parts.index('folders')
+        if folder_index + 1 < len(path_parts):
+            folder_id = path_parts[folder_index + 1]
+            return folder_id
+
+    return None
