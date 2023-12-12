@@ -1,6 +1,6 @@
 {
     "name": "talent screen",
-    "description": "It summarizes Italian parliamentary debates for efficient access to legislative insights in Italy.",
+    "description": "Agent will read resume and match it against provided job description.",
     "icon": "https://github.com/Pradeepchauhan89/talent-screen/blob/main/talent-screen.png?raw=true",
     "color": "#d3eeb6",
     "url": "https://talent-screen.Pradeepchauhan89.repl.co",
