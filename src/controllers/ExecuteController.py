@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 from src.agents.get_files import file_list
 from src.agents.get_file_contents import file_content
 from src.agents.screen import screen_resume
+from src.agents.google_doc import create_doc, add_title_to_doc
 
 from src.utils.temp_db import temp_data
 from src.core.logger import Logger
@@ -37,11 +38,7 @@ class ExecuteController:
         url = ''
         if param['name'] == "url":
           url = param['data']
-        
-        folder_id = extract_folder_id_from_url(url)
-        files = file_list(folder_id)
-
-        files = files.get('files', [])
+      
       
       call_webhook_with_success({
         "status": "Inprogress",
@@ -50,7 +47,35 @@ class ExecuteController:
           "info": "Agent is fetching file from drive.",
         }
       })
+
+      folder_id = extract_folder_id_from_url(url)
+      files = file_list(folder_id)
+
+      files = files.get('files', [])
       
+      call_webhook_with_success({
+        "status": "Inprogress",
+        "data": {
+          "title": "creating doc files...",
+          "info": "Agent is creating doc file to write output.",
+        }
+      })
+      
+      doc_id = create_doc('this is for testiing')
+      doc_url = f'https://docs.google.com/document/d/{doc_id}/'
+      call_webhook_with_success({
+        "status": "Inprogress",
+        "data": {
+          "title": "Doc url has been generated ...",
+          "info": "Agent has been created doc.",
+          "output": {
+            "name": "debate",
+            "type": "url",
+            "data": doc_url
+          }
+        }
+      })
+
       for file in files:
         print(f"\n\n\n\n\n{file['name']} ({file['id']})")
         file_id = file['id']
@@ -58,11 +83,12 @@ class ExecuteController:
           "status": "Inprogress",
           "data": {
             "title": f"Fetching file content {file['name']}",
-            "info": "Agent is fetching file from drive.",
+            "info": "Agent is fetching file from drive."
           }
         })
         file_text = file_content(file)
-        screen_resume(file_text)
+        resp = screen_resume(file_text)
+        add_title_to_doc(doc_id, resp, 1)
 
       call_webhook_with_success({
         "status": "completed",
@@ -70,9 +96,9 @@ class ExecuteController:
           "title": "Agent executed successfully.",
           "info": "All resume has been reviewed. Please visit Doc url.",
           "output": {
-            "name": "Doc Url",
+            "name": "DocUrl",
             "type": "url",
-            "data": "Greeting of the day :pray::pray:"
+            "data": doc_url
           }
         }
       })
