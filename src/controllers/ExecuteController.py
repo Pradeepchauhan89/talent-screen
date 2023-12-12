@@ -41,12 +41,25 @@ class ExecuteController:
         files = file_list(folder_id)
 
         files = files.get('files', [])
-        print(files)
+      
+      call_webhook_with_success({
+        "status": "Inprogress",
+        "data": {
+          "title": "Fetching files...",
+          "info": "Agent is fetching file from drive.",
+        }
+      })
       
       for file in files:
-        print(file)
         print(f"\n\n\n\n\n{file['name']} ({file['id']})")
         file_id = file['id']
+        call_webhook_with_success({
+          "status": "Inprogress",
+          "data": {
+            "title": f"Fetching file content {file['name']}",
+            "info": "Agent is fetching file from drive.",
+          }
+        })
         file_content(file)
         # Get the file content as a media object.
         
